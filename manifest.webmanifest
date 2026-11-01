@@ -1,0 +1,10 @@
+{
+  "name": "Anatomia",
+  "short_name": "Anatomia",
+  "description": "Локальные анатомические карточки для изучения",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f4f6fa",
+  "theme_color": "#f4f6fa",
+  "icons": []
+}

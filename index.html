@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f4f6fa">
+  <title>Anatomia</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg:#f4f6fa; --surface:#fff; --surface2:#eef1f6; --text:#202634;
+      --muted:#737d8e; --line:#e1e6ee; --accent:#5268d8; --accent2:#e8ecff;
+      --good:#16865d; --bad:#c24e58; --shadow:0 8px 28px rgba(27,39,69,.07);
+      --radius:18px;
+    }
+    [data-theme="dark"] {
+      color-scheme:dark;
+      --bg:#151923; --surface:#202633; --surface2:#2a3342; --text:#edf1f8;
+      --muted:#a0aabc; --line:#374253; --accent:#9aa8ff; --accent2:#30395e;
+      --good:#5bd2a1; --bad:#ff8790; --shadow:0 8px 28px rgba(0,0,0,.2);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+    button,input,textarea{font:inherit}
+    button{cursor:pointer}
+    .app{max-width:1040px;margin:auto;padding:22px 20px 100px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:26px}
+    .brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:22px;letter-spacing:-.6px}
+    .brandmark{width:36px;height:36px;border-radius:12px;background:var(--accent);color:white;display:grid;place-items:center;font-weight:800}
+    .header-actions{display:flex;gap:8px}
+    .iconbtn,.btn{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:12px;padding:10px 14px}
+    .iconbtn{width:42px;height:42px;padding:0;font-size:18px}
+    .btn.primary{background:var(--accent);color:white;border-color:var(--accent)}
+    .btn.subtle{background:var(--accent2);color:var(--accent);border-color:transparent}
+    .btn.danger{color:var(--bad)}
+    .btn:disabled{opacity:.45;cursor:not-allowed}
+    h1{font-size:clamp(25px,4vw,34px);letter-spacing:-1px;margin:0 0 6px}
+    h2{font-size:21px;letter-spacing:-.5px;margin:0}
+    p{color:var(--muted);margin:0}
+    .topline{display:flex;align-items:flex-end;justify-content:space-between;gap:15px;margin:22px 0}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+    .panel,.deck,.cardbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .deck{padding:18px;display:flex;flex-direction:column;gap:12px;min-height:170px}
+    .deck-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+    .deck h3{font-size:17px;margin:0}
+    .count{font-size:12px;color:var(--muted);background:var(--surface2);padding:5px 9px;border-radius:20px;white-space:nowrap}
+    .progress{height:6px;background:var(--surface2);border-radius:9px;overflow:hidden}
+    .progress span{display:block;height:100%;background:var(--accent);border-radius:9px}
+    .deck-actions{display:flex;gap:8px;margin-top:auto;flex-wrap:wrap}
+    .deck-actions .btn{font-size:13px;padding:8px 10px}
+    .empty{padding:42px 20px;text-align:center;grid-column:1/-1}
+    .empty .symbol{font-size:34px;margin-bottom:12px}
+    .empty h3{margin:0 0 5px}
+    .tabs{position:fixed;bottom:0;left:0;right:0;background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;justify-content:center;z-index:5;padding:8px 10px calc(8px + env(safe-area-inset-bottom))}
+    .tabs-inner{display:flex;max-width:650px;width:100%;justify-content:space-around}
+    .tab{border:0;background:none;color:var(--muted);padding:7px 14px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px}
+    .tab span{font-size:19px}.tab.active{color:var(--accent);background:var(--accent2)}
+    .view{display:none}.view.active{display:block}
+    .form{max-width:650px;padding:22px}
+    .field{display:flex;flex-direction:column;gap:6px;margin:15px 0}
+    label{font-size:13px;font-weight:650}
+    input[type=text],textarea{width:100%;border:1px solid var(--line);background:var(--bg);color:var(--text);padding:12px 13px;border-radius:12px;outline:none}
+    input:focus,textarea:focus{border-color:var(--accent)}
+    textarea{resize:vertical;min-height:78px}
+    .upload{border:1.5px dashed var(--line);border-radius:15px;min-height:150px;display:grid;place-items:center;text-align:center;background:var(--bg);overflow:hidden;position:relative}
+    .upload img{width:100%;height:190px;object-fit:contain;background:var(--surface2)}
+    .upload label{padding:24px;cursor:pointer;color:var(--muted)}
+    .upload input{display:none}
+    .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}
+    .study-wrap{max-width:680px;margin:0 auto}
+    .study-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;margin-bottom:12px}
+    .study-card{overflow:hidden;padding:18px}
+    .study-image{height:min(52vh,480px);min-height:220px;background:var(--surface2);border-radius:13px;display:grid;place-items:center;overflow:hidden;touch-action:none;cursor:grab;user-select:none}
+    .study-image img{width:100%;height:100%;object-fit:contain;transform:translate(var(--pan-x,0px),var(--pan-y,0px)) scale(var(--image-zoom,1));transform-origin:center;transition:transform .12s ease;pointer-events:none;-webkit-user-drag:none}
+    .study-image.dragging{cursor:grabbing}.study-image.dragging img{transition:none}
+    .no-image{color:var(--muted);text-align:center;padding:20px}
+    .image-controls{display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;margin:10px 0 2px}
+    .image-controls .btn{padding:7px 11px;font-size:13px}
+    .image-controls input{width:min(150px,28vw);accent-color:var(--accent)}
+    .image-zoom-label{font-size:12px;color:var(--muted);min-width:42px;text-align:center}
+    .study-title{text-align:center;font-size:25px;font-weight:750;margin:19px 0 14px}
+    .answer{background:var(--surface2);border-radius:13px;padding:15px;text-align:center;margin:0 auto 14px;min-height:58px}
+    .answer strong{font-size:21px}
+    .answer.hidden strong{letter-spacing:5px;color:var(--muted)}
+    .study-buttons{display:flex;gap:10px}
+    .study-buttons .btn{flex:1}
+    .rating-buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+    .rating-buttons .btn{padding:13px}
+    .rating-buttons .know{color:var(--good);border-color:color-mix(in srgb,var(--good) 35%,var(--line))}
+    .rating-buttons .dont{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 35%,var(--line))}
+    .muted-note{text-align:center;color:var(--muted);font-size:12px;margin-top:10px}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+    .stat{padding:17px}.stat strong{font-size:25px;display:block}.stat span{font-size:12px;color:var(--muted)}
+    .list{display:flex;flex-direction:column;gap:9px}
+    .item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--surface);border:1px solid var(--line);border-radius:13px}
+    .thumb{width:54px;height:54px;border-radius:9px;background:var(--surface2);object-fit:contain;flex:none}
+    .item-main{min-width:0;flex:1}.item-main strong{display:block}.item-main small{color:var(--muted)}
+    .item-actions{display:flex;gap:5px}
+    .smallbtn{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:9px;padding:7px 9px}
+    .notice{padding:12px 14px;border-radius:12px;background:var(--accent2);color:var(--text);font-size:13px;margin:12px 0}
+    .hidden{display:none!important}
+    @media(max-width:600px){.app{padding:16px 14px 100px}header{margin-bottom:18px}.topline{align-items:flex-start;flex-direction:column}.topline .btn{width:100%}.form{padding:16px}.stats{gap:7px}.stat{padding:12px}.stat strong{font-size:21px}.study-card{padding:12px}.study-image{height:34vh;min-height:170px}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="brand"><div class="brandmark">A</div> Anatomia</div>
+    <div class="header-actions">
+      <button class="iconbtn" id="themeBtn" title="Сменить тему" aria-label="Сменить тему">☾</button>
+      <button class="iconbtn" id="exportAllBtn" title="Экспорт всех наборов" aria-label="Экспорт">⇧</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="view active" id="homeView">
+      <div class="topline"><div><h1>Мои наборы</h1><p>Материалы для изучения анатомии</p></div><button class="btn primary" id="newDeckBtn">＋ Создать набор</button></div>
+      <div class="grid" id="deckGrid"></div>
+    </section>
+
+    <section class="view" id="deckView">
+      <div class="topline"><div><h1 id="deckTitle">Набор</h1><p id="deckSubtitle"></p></div><button class="btn" id="backHomeBtn">← К наборам</button></div>
+      <div class="actions" style="margin:0 0 16px">
+        <button class="btn primary" id="addCardBtn">＋ Добавить карточку</button>
+        <button class="btn" id="studyDeckBtn">Начать изучение</button>
+        <button class="btn" id="exportDeckBtn">Экспорт набора</button>
+        <button class="btn" id="importDeckBtn">Импорт набора</button>
+        <input type="file" id="importInput" accept=".anat,.json,application/json" hidden>
+      </div>
+      <div class="list" id="cardList"></div>
+    </section>
+
+    <section class="view" id="deckFormView">
+      <div class="topline"><div><h1 id="deckFormHeading">Новый набор</h1><p>Название и описание учебной темы</p></div></div>
+      <div class="panel form">
+        <div class="field"><label for="deckName">Название набора</label><input id="deckName" type="text" placeholder="Например, Кости скелета"></div>
+        <div class="field"><label for="deckDescription">Описание (необязательно)</label><textarea id="deckDescription" placeholder="Что входит в этот набор?"></textarea></div>
+        <div class="actions"><button class="btn primary" id="saveDeckBtn">Сохранить</button><button class="btn" id="cancelDeckBtn">Отмена</button></div>
+      </div>
+    </section>
+
+    <section class="view" id="cardFormView">
+      <div class="topline"><div><h1 id="cardFormHeading">Новая карточка</h1><p>Одно изображение и два названия</p></div></div>
+      <div class="panel form">
+        <div class="field"><label>Изображение</label>
+          <div class="upload" id="uploadBox"><label for="imageInput"><div style="font-size:30px">＋</div><strong>Выбрать изображение</strong><br><small>JPG, PNG или WebP</small></label><input id="imageInput" type="file" accept="image/png,image/jpeg,image/webp"></div>
+        </div>
+        <div class="field"><label for="ruName">Название на русском</label><input id="ruName" type="text" placeholder="Например, Лопатка"></div>
+        <div class="field"><label for="laName">Название на латинском</label><input id="laName" type="text" placeholder="Например, Scapula"></div>
+        <div class="actions"><button class="btn primary" id="saveCardBtn">Сохранить карточку</button><button class="btn" id="cancelCardBtn">Отмена</button></div>
+      </div>
+    </section>
+
+    <section class="view" id="studyView">
+      <div class="topline"><div><h1>Изучение</h1><p id="studyDeckName"></p></div><button class="btn" id="exitStudyBtn">Завершить</button></div>
+      <div class="study-wrap">
+        <div class="study-meta"><span id="studyPosition">Карточка 1 из 1</span><span id="studyProgress">Изучение</span></div>
+        <div class="progress" style="margin-bottom:14px"><span id="studyBar" style="width:0%"></span></div>
+        <div class="panel study-card">
+          <div class="study-image" id="studyImage"></div>
+          <div class="image-controls" aria-label="Управление изображением">
+            <button class="btn" id="imageFitBtn" type="button">Вписать целиком</button>
+            <button class="btn" id="imageZoomOut" type="button" aria-label="Уменьшить изображение">−</button>
+            <input id="imageZoom" type="range" min="100" max="250" step="10" value="100" aria-label="Масштаб изображения">
+            <span class="image-zoom-label" id="imageZoomLabel">100%</span>
+            <button class="btn" id="imageZoomIn" type="button" aria-label="Увеличить изображение">+</button>
+          </div>
+          <div class="study-title" id="studyRu"></div>
+          <div class="answer hidden" id="answerBox"><strong id="studyLa">••••••••</strong></div>
+          <div class="study-buttons"><button class="btn subtle" id="revealBtn">Показать ответ</button><button class="btn" id="nextBtn">Следующая →</button></div>
+          <div class="rating-buttons"><button class="btn know" id="knowBtn">✓ Знаю</button><button class="btn dont" id="dontKnowBtn">✕ Не знаю</button></div>
+          <div class="muted-note" id="ratingNote">Оценка сохраняется отдельно от карточки и не влияет на её наличие в наборе.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="statsView">
+      <div class="topline"><div><h1>Статистика</h1><p>Твои результаты изучения</p></div></div>
+      <div class="stats">
+        <div class="panel stat"><strong id="statDecks">0</strong><span>Наборов</span></div>
+        <div class="panel stat"><strong id="statCards">0</strong><span>Карточек</span></div>
+        <div class="panel stat"><strong id="statReviews">0</strong><span>Оценок</span></div>
+      </div>
+      <div class="notice">Оценки «Знаю» и «Не знаю» записываются в историю изучения. При экспорте набора история не передаётся.</div>
+    </section>
+
+    <section class="view" id="settingsView">
+      <div class="topline"><div><h1>Настройки</h1><p>Внешний вид и данные приложения</p></div></div>
+      <div class="panel form">
+        <div class="field"><label for="themeSelect">Цветовая тема</label><select id="themeSelect" style="padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--text)"><option value="system">Как в системе</option><option value="light">Светлая</option><option value="dark">Тёмная</option></select></div>
+        <div class="field"><label>Резервная копия</label><p>Экспортируй все наборы, чтобы сохранить их или перенести на другое устройство.</p><button class="btn" id="backupBtn">Экспортировать все наборы</button></div>
+        <div class="field"><label>Данные</label><p>Все карточки хранятся в этом браузере на этом устройстве.</p><button class="btn danger" id="clearDataBtn">Удалить все данные</button></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<nav class="tabs"><div class="tabs-inner">
+  <button class="tab active" data-view="homeView"><span>⌂</span>Главная</button>
+  <button class="tab" data-view="homeView"><span>▤</span>Наборы</button>
+  <button class="tab" data-view="statsView"><span>▥</span>Статистика</button>
+  <button class="tab" data-view="settingsView"><span>⚙</span>Настройки</button>
+</div></nav>
+<script>
+(() => {
+  const DB_NAME='anatomia-db', DB_VERSION=1;
+  let db, decks=[], currentDeckId=null, editingDeckId=null, editingCardId=null;
+  let studyCards=[], studyIndex=0, currentImage=null, ratingCount=0, imageFit='contain', imageZoom=100, imagePanX=0, imagePanY=0, imageDrag=null;
+  const $=id=>document.getElementById(id);
+  const uid=()=>crypto.randomUUID ? crypto.randomUUID() : 'id-'+Date.now()+'-'+Math.random().toString(16).slice(2);
+  const openDB=()=>new Promise((resolve,reject)=>{
+    const req=indexedDB.open(DB_NAME,DB_VERSION);
+    req.onupgradeneeded=()=>{const d=req.result; if(!d.objectStoreNames.contains('decks'))d.createObjectStore('decks',{keyPath:'id'});if(!d.objectStoreNames.contains('cards')){const s=d.createObjectStore('cards',{keyPath:'id'});s.createIndex('deckId','deckId',{unique:false});}if(!d.objectStoreNames.contains('reviews')){const s=d.createObjectStore('reviews',{keyPath:'id'});s.createIndex('cardId','cardId',{unique:false});}};
+    req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);
+  });
+  const tx=(store,mode='readonly')=>db.transaction(store,mode).objectStore(store);
+  const reqP=req=>new Promise((res,rej)=>{req.onsuccess=()=>res(req.result);req.onerror=()=>rej(req.error)});
+  const all=store=>reqP(tx(store).getAll());
+  const put=(store,obj)=>reqP(tx(store,'readwrite').put(obj));
+  const del=(store,id)=>reqP(tx(store,'readwrite').delete(id));
+  const get= (store,id)=>reqP(tx(store).get(id));
+  const cardsFor=async deckId=>(await all('cards')).filter(c=>String(c.deckId??c.deck_id??c.setId??'')===String(deckId));
+  const showView=id=>{document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.view===id || (id==='deckView'&&t.dataset.view==='homeView')));window.scrollTo(0,0)};
+  const escapeHTML=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const imageURL=blob=>blob?URL.createObjectURL(blob):'';
+  async function refresh(){
+    decks=(await all('decks')).sort((a,b)=>a.name.localeCompare(b.name,'ru'));
+    $('deckGrid').innerHTML='';
+    if(!decks.length){$('deckGrid').innerHTML='<div class="panel empty"><div class="symbol">▤</div><h3>Пока нет наборов</h3><p>Создай первый набор и добавь в него анатомические карточки.</p><br><button class="btn primary" id="emptyCreate">＋ Создать набор</button></div>';$('emptyCreate').onclick=newDeck;}
+    for(const d of decks){
+      const cs=await cardsFor(d.id), reviews=(await all('reviews')).filter(r=>cs.some(c=>c.id===r.cardId));
+      const known=new Set(reviews.filter(r=>r.rating==='know').map(r=>r.cardId)).size;
+      const el=document.createElement('article');el.className='deck';
+      el.innerHTML=`<div class="deck-head"><h3>${escapeHTML(d.name)}</h3><span class="count">${cs.length} карточек</span></div><p>${escapeHTML(d.description||'Учебный набор')}</p><div class="progress"><span style="width:${cs.length?Math.round(known/cs.length*100):0}%"></span></div><div class="deck-actions"><button class="btn primary open">Открыть</button><button class="btn edit">Изменить</button><button class="btn export">⇧</button></div>`;
+      el.querySelector('.open').onclick=()=>openDeck(d.id);el.querySelector('.edit').onclick=()=>editDeck(d.id);el.querySelector('.export').onclick=()=>exportDeck(d.id);$('deckGrid').append(el);
+    }
+    updateStats();
+  }
+  async function updateStats(){
+    const cs=await all('cards'),rs=await all('reviews');
+    $('statDecks').textContent=decks.length;$('statCards').textContent=cs.length;$('statReviews').textContent=rs.length;
+  }
+  function newDeck(){editingDeckId=null;$('deckFormHeading').textContent='Новый набор';$('deckName').value='';$('deckDescription').value='';showView('deckFormView')}
+  async function editDeck(id){const d=await get('decks',id);editingDeckId=id;$('deckFormHeading').textContent='Изменить набор';$('deckName').value=d.name;$('deckDescription').value=d.description||'';showView('deckFormView')}
+  async function openDeck(id){
+    currentDeckId=id;const d=await get('decks',id),cs=await cardsFor(id);
+    $('deckTitle').textContent=d.name;$('deckSubtitle').textContent=(d.description||'')+' · '+cs.length+' карточек';
+    const list=$('cardList');list.innerHTML='';
+    if(!cs.length)list.innerHTML='<div class="panel empty"><h3>В наборе пока нет карточек</h3><p>Добавь первую анатомическую структуру.</p></div>';
+    for(const c of cs){
+      const el=document.createElement('div');el.className='item';
+      const src=imageURL(c.image);el.innerHTML=`${src?`<img class="thumb" src="${src}">`:'<div class="thumb" style="display:grid;place-items:center">▧</div>'}<div class="item-main"><strong>${escapeHTML(c.ru)}</strong><small>${escapeHTML(c.la)}</small></div><div class="item-actions"><button class="smallbtn edit">Изм.</button><button class="smallbtn delete">×</button></div>`;
+      el.querySelector('.edit').onclick=()=>editCard(c.id);el.querySelector('.delete').onclick=async()=>{if(confirm('Удалить карточку «'+c.ru+'»?')){await del('cards',c.id);const rs=(await all('reviews')).filter(r=>r.cardId===c.id);for(const r of rs)await del('reviews',r.id);openDeck(id);}};
+      list.append(el);
+    }
+    showView('deckView');
+  }
+  function newCard(){editingCardId=null;currentImage=null;$('cardFormHeading').textContent='Новая карточка';$('ruName').value='';$('laName').value='';renderUpload();showView('cardFormView')}
+  async function editCard(id){const c=await get('cards',id);editingCardId=id;currentImage=c.image||null;$('cardFormHeading').textContent='Изменить карточку';$('ruName').value=c.ru;$('laName').value=c.la;renderUpload();showView('cardFormView')}
+  function renderUpload(){const box=$('uploadBox');if(currentImage){const u=imageURL(currentImage);box.innerHTML=`<img src="${u}" alt="Изображение карточки"><label for="imageInput" style="position:absolute;bottom:7px;right:7px;background:var(--surface);padding:8px 11px;border-radius:9px">Заменить</label><input id="imageInput" type="file" accept="image/png,image/jpeg,image/webp">`;}else{box.innerHTML='<label for="imageInput"><div style="font-size:30px">＋</div><strong>Выбрать изображение</strong><br><small>JPG, PNG или WebP</small></label><input id="imageInput" type="file" accept="image/png,image/jpeg,image/webp">';} $('imageInput').onchange=e=>{const f=e.target.files[0];if(f){if(!f.type.startsWith('image/'))return alert('Выбери файл изображения.');currentImage=f;renderUpload();}}}
+  async function saveCard(){
+    const ru=$('ruName').value.trim(),la=$('laName').value.trim();
+    if(!ru||!la)return alert('Заполни русское и латинское названия.');
+    if(!currentImage)return alert('Добавь изображение карточки.');
+    const c={id:editingCardId||uid(),deckId:currentDeckId,ru,la,image:currentImage,updatedAt:Date.now()};
+    await put('cards',c);openDeck(currentDeckId);
+  }
+  async function startStudy(){
+    studyCards=await cardsFor(currentDeckId);if(!studyCards.length)return alert('В этом наборе пока нет карточек.');
+    studyCards.sort(()=>Math.random()-.5);studyIndex=0;ratingCount=0;$('studyDeckName').textContent=(await get('decks',currentDeckId)).name;renderStudy();showView('studyView');
+  }
+  function renderStudy(){
+    const c=studyCards[studyIndex];imageFit='contain';imageZoom=100;imagePanX=0;imagePanY=0;updateStudyImageControls();$('studyPosition').textContent=`Карточка ${studyIndex+1} из ${studyCards.length}`;$('studyProgress').textContent='Изучение';$('studyBar').style.width=((studyIndex+1)/studyCards.length*100)+'%';
+    $('studyImage').innerHTML=c.image?`<img src="${imageURL(c.image)}" alt="">`:'<div class="no-image">Изображение не добавлено</div>';
+    updateStudyImageControls();
+    $('studyRu').textContent=c.ru;$('studyLa').textContent=c.la;$('answerBox').classList.add('hidden');$('revealBtn').textContent='Показать ответ';$('ratingNote').textContent='Оценка сохраняется отдельно от карточки и не влияет на её наличие в наборе.';
+    $('nextBtn').textContent=studyIndex===studyCards.length-1?'Завершить →':'Следующая →';
+  }
+  $('revealBtn').onclick=()=>{const hidden=$('answerBox').classList.toggle('hidden');$('revealBtn').textContent=hidden?'Показать ответ':'Скрыть ответ'};
+  function updateStudyImageControls(){
+    const viewer=$('studyImage');
+    viewer.style.setProperty('--image-zoom',String(imageZoom/100));
+    viewer.style.setProperty('--pan-x',imagePanX+'px');
+    viewer.style.setProperty('--pan-y',imagePanY+'px');
+    const img=viewer.querySelector('img');
+    if(img)img.style.objectFit=imageFit;
+    $('imageFitBtn').textContent=imageFit==='contain'?'Заполнить область':'Вписать целиком';
+    $('imageZoom').value=String(imageZoom);
+    $('imageZoomLabel').textContent=imageZoom+'%';
+    $('imageZoomOut').disabled=imageZoom<=100;
+    $('imageZoomIn').disabled=imageZoom>=300;
+  }
+  $('imageFitBtn').onclick=()=>{
+    if(imageFit==='contain'){
+      imageFit='cover'; imageZoom=100; imagePanX=0; imagePanY=0;
+    }else{
+      imageFit='contain'; imageZoom=100; imagePanX=0; imagePanY=0;
+    }
+    updateStudyImageControls();
+  };
+  $('imageZoom').max='300';
+  $('imageZoom').oninput=e=>{imageZoom=Number(e.target.value);updateStudyImageControls();};
+  $('imageZoomOut').onclick=()=>{imageZoom=Math.max(100,imageZoom-10);updateStudyImageControls();};
+  $('imageZoomIn').onclick=()=>{imageZoom=Math.min(300,imageZoom+10);updateStudyImageControls();};
+  const studyViewer=$('studyImage');
+  studyViewer.addEventListener('pointerdown',e=>{
+    if(!studyViewer.querySelector('img'))return;
+    imageDrag={pointerId:e.pointerId,startX:e.clientX,startY:e.clientY,panX:imagePanX,panY:imagePanY};
+    studyViewer.setPointerCapture(e.pointerId);studyViewer.classList.add('dragging');
+  });
+  studyViewer.addEventListener('pointermove',e=>{
+    if(!imageDrag||imageDrag.pointerId!==e.pointerId)return;
+    imagePanX=imageDrag.panX+(e.clientX-imageDrag.startX);
+    imagePanY=imageDrag.panY+(e.clientY-imageDrag.startY);
+    updateStudyImageControls();
+  });
+  const endImageDrag=e=>{
+    if(!imageDrag||imageDrag.pointerId!==e.pointerId)return;
+    imageDrag=null;studyViewer.classList.remove('dragging');
+  };
+  studyViewer.addEventListener('pointerup',endImageDrag);
+  studyViewer.addEventListener('pointercancel',endImageDrag);
+  $('nextBtn').onclick=()=>{if(studyIndex<studyCards.length-1){studyIndex++;renderStudy()}else{showView('deckView');openDeck(currentDeckId)}};
+  async function rate(rating){const c=studyCards[studyIndex];await put('reviews',{id:uid(),cardId:c.id,deckId:currentDeckId,rating,createdAt:Date.now()});ratingCount++;$('ratingNote').textContent=rating==='know'?'Ответ отмечен как известный.':'Ответ отмечен для повторения.';updateStats();}
+  $('knowBtn').onclick=()=>rate('know');$('dontKnowBtn').onclick=()=>rate('dont');
+  function downloadBlob(blob,name){const a=document.createElement('a'),u=URL.createObjectURL(blob);a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1500)}
+  async function exportDeck(id){
+    const d=await get('decks',id),cs=await cardsFor(id),payload={format:'ANATOMIA',version:1,deck:{name:d.name,description:d.description||''},cards:[]};
+    for(const c of cs){payload.cards.push({ru:c.ru,la:c.la,imageData:await blobToDataURL(c.image)});}
+    downloadBlob(new Blob([JSON.stringify(payload)],{type:'application/json'}),safeName(d.name)+'.anat');
+  }
+  async function exportAll(){
+    const payload={format:'ANATOMIA_COLLECTION',version:1,decks:[]};
+    for(const d of decks){const cs=await cardsFor(d.id),deck={name:d.name,description:d.description||'',cards:[]};for(const c of cs)deck.cards.push({ru:c.ru,la:c.la,imageData:await blobToDataURL(c.image)});payload.decks.push(deck);}
+    downloadBlob(new Blob([JSON.stringify(payload)],{type:'application/json'}),'anatomia-backup.anat');
+  }
+  const safeName=s=>s.toLowerCase().replace(/[^a-zа-яё0-9]+/gi,'-').replace(/^-|-$/g,'')||'anatomia';
+  const blobToDataURL=blob=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(blob)});
+  const dataURLToBlob=url=>fetch(url).then(r=>r.blob());
+  async function importFile(file){
+    try{
+      const p=JSON.parse(await file.text());
+      if(p.format!=='ANATOMIA'||p.version!==1||!p.deck||!Array.isArray(p.cards))throw Error('Формат файла не распознан.');
+      const name=p.deck.name||'Импортированный набор';
+      const existing=decks.some(d=>d.name.toLowerCase()===name.toLowerCase());
+      const finalName=existing?name+' (импорт)':name;
+      const deck={id:uid(),name:finalName,description:p.deck.description||'',createdAt:Date.now()};await put('decks',deck);
+      for(const c of p.cards){if(!c.ru||!c.la||!c.imageData)continue;await put('cards',{id:uid(),deckId:deck.id,ru:c.ru,la:c.la,image:await dataURLToBlob(c.imageData),updatedAt:Date.now()});}
+      await refresh();openDeck(deck.id);alert('Набор импортирован.');
+    }catch(e){alert('Не удалось импортировать файл: '+e.message)}
+  }
+  $('newDeckBtn').onclick=newDeck;$('backHomeBtn').onclick=()=>showView('homeView');$('addCardBtn').onclick=newCard;$('studyDeckBtn').onclick=startStudy;
+  $('exportDeckBtn').onclick=()=>exportDeck(currentDeckId);$('importDeckBtn').onclick=()=>$('importInput').click();$('importInput').onchange=e=>{if(e.target.files[0])importFile(e.target.files[0]);e.target.value=''};
+  $('saveDeckBtn').onclick=async()=>{const name=$('deckName').value.trim();if(!name)return alert('Введи название набора.');const d={id:editingDeckId||uid(),name,description:$('deckDescription').value.trim(),createdAt:Date.now()};await put('decks',d);await refresh();if(editingDeckId)openDeck(d.id);else openDeck(d.id)};
+  $('cancelDeckBtn').onclick=()=>editingDeckId?openDeck(editingDeckId):showView('homeView');
+  $('saveCardBtn').onclick=saveCard;$('cancelCardBtn').onclick=()=>openDeck(currentDeckId);$('exitStudyBtn').onclick=()=>openDeck(currentDeckId);
+  $('exportAllBtn').onclick=exportAll;$('backupBtn').onclick=exportAll;
+  $('clearDataBtn').onclick=async()=>{if(confirm('Удалить все наборы, карточки и историю изучения? Это действие нельзя отменить.')){for(const s of ['decks','cards','reviews'])for(const x of await all(s))await del(s,x.id);await refresh();showView('homeView')}};
+  document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{if(t.dataset.view==='homeView')showView('homeView');else showView(t.dataset.view);if(t.dataset.view==='statsView')updateStats()});
+  const applyTheme=t=>{const v=t==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):t;document.documentElement.dataset.theme=v;$('themeBtn').textContent=v==='dark'?'☀':'☾';$('themeSelect').value=t;};
+  let themeSetting=localStorage.getItem('anatomia-theme')||'system';applyTheme(themeSetting);
+  $('themeBtn').onclick=()=>{themeSetting=document.documentElement.dataset.theme==='dark'?'light':'dark';localStorage.setItem('anatomia-theme',themeSetting);applyTheme(themeSetting)};
+  $('themeSelect').onchange=e=>{themeSetting=e.target.value;localStorage.setItem('anatomia-theme',themeSetting);applyTheme(themeSetting)};
+  openDB().then(async d=>{db=d;await refresh()}).catch(e=>alert('Не удалось открыть локальное хранилище: '+e.message));
+  if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+})();
+</script>
+</body>
+</html>
