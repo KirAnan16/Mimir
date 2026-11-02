@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f4f6fa">
-  <title>Anatomia</title>
+  <title>Mimir</title>
   <link rel="manifest" href="manifest.webmanifest">
   <style>
     :root {
@@ -106,7 +106,7 @@
 <body>
 <div class="app">
   <header>
-    <div class="brand"><div class="brandmark">A</div> Anatomia</div>
+    <div class="brand"><div class="brandmark">M</div> Mimir</div>
     <div class="header-actions">
       <button class="iconbtn" id="themeBtn" title="Сменить тему" aria-label="Сменить тему">☾</button>
       <button class="iconbtn" id="exportAllBtn" title="Экспорт всех наборов" aria-label="Экспорт">⇧</button>
@@ -232,10 +232,46 @@
       const cs=await cardsFor(d.id), reviews=(await all('reviews')).filter(r=>cs.some(c=>c.id===r.cardId));
       const known=new Set(reviews.filter(r=>r.rating==='know').map(r=>r.cardId)).size;
       const el=document.createElement('article');el.className='deck';
-      el.innerHTML=`<div class="deck-head"><h3>${escapeHTML(d.name)}</h3><span class="count">${cs.length} карточек</span></div><p>${escapeHTML(d.description||'Учебный набор')}</p><div class="progress"><span style="width:${cs.length?Math.round(known/cs.length*100):0}%"></span></div><div class="deck-actions"><button class="btn primary open">Открыть</button><button class="btn edit">Изменить</button><button class="btn export">⇧</button></div>`;
-      el.querySelector('.open').onclick=()=>openDeck(d.id);el.querySelector('.edit').onclick=()=>editDeck(d.id);el.querySelector('.export').onclick=()=>exportDeck(d.id);$('deckGrid').append(el);
+      el.innerHTML=`<div class="deck-head"><h3>${escapeHTML(d.name)}</h3><span class="count">${cs.length} карточек</span></div><p>${escapeHTML(d.description||'Учебный набор')}</p><div class="progress"><span style="width:${cs.length?Math.round(known/cs.length*100):0}%"></span></div><div class="deck-actions"><button class="btn primary open">Открыть</button><button class="btn edit">Изменить</button><button class="btn export" aria-label="Экспортировать набор">⇧</button><button class="btn danger delete-deck">Удалить</button></div>`;
+      el.querySelector('.open').onclick=()=>openDeck(d.id);el.querySelector('.edit').onclick=()=>editDeck(d.id);el.querySelector('.export').onclick=()=>exportDeck(d.id);
+      el.querySelector('.delete-deck').onclick=()=>deleteDeck(d.id);$('deckGrid').append(el);
     }
     updateStats();
+  }
+  async function deleteDeck(id){
+    const deck=await get('decks',id);
+    if(!deck)return;
+    const cards=await cardsFor(id);
+    const cardIds=new Set(cards.map(c=>c.id));
+    const reviews=(await all('reviews')).filter(r=>cardIds.has(r.cardId)||String(r.deckId??'')===String(id));
+    const message=`Удалить набор «${deck.name}»?\n\nКарточек: ${cards.length}\nЗаписей истории: ${reviews.length}\n\nБудут удалены только этот набор, его карточки и связанные оценки. Это действие нельзя отменить.`;
+    if(!confirm(message))return;
+    await new Promise((resolve,reject)=>{
+      const transaction=db.transaction(['decks','cards','reviews'],'readwrite');
+      const deckStore=transaction.objectStore('decks');
+      const cardStore=transaction.objectStore('cards');
+      const reviewStore=transaction.objectStore('reviews');
+      const cardRequest=cardStore.getAll();
+      const reviewRequest=reviewStore.getAll();
+      let remaining=2;
+      let allCards,allReviews;
+      const removeWhenReady=()=>{
+        remaining--;
+        if(remaining!==0)return;
+        const matchingCards=allCards.filter(c=>String(c.deckId??c.deck_id??c.setId??'')===String(id));
+        const matchingIds=new Set(matchingCards.map(c=>c.id));
+        const matchingReviews=allReviews.filter(r=>matchingIds.has(r.cardId)||String(r.deckId??'')===String(id));
+        for(const card of matchingCards)cardStore.delete(card.id);
+        for(const review of matchingReviews)reviewStore.delete(review.id);
+        deckStore.delete(id);
+      };
+      cardRequest.onsuccess=()=>{allCards=cardRequest.result;removeWhenReady()};
+      reviewRequest.onsuccess=()=>{allReviews=reviewRequest.result;removeWhenReady()};
+      transaction.oncomplete=resolve;
+      transaction.onerror=()=>reject(transaction.error||new Error('Не удалось удалить набор.'));
+      transaction.onabort=()=>reject(transaction.error||new Error('Удаление набора отменено.'));
+    });
+    await refresh();
   }
   async function updateStats(){
     const cs=await all('cards'),rs=await all('reviews');
@@ -333,9 +369,9 @@
   async function exportAll(){
     const payload={format:'ANATOMIA_COLLECTION',version:1,decks:[]};
     for(const d of decks){const cs=await cardsFor(d.id),deck={name:d.name,description:d.description||'',cards:[]};for(const c of cs)deck.cards.push({ru:c.ru,la:c.la,imageData:await blobToDataURL(c.image)});payload.decks.push(deck);}
-    downloadBlob(new Blob([JSON.stringify(payload)],{type:'application/json'}),'anatomia-backup.anat');
+    downloadBlob(new Blob([JSON.stringify(payload)],{type:'application/json'}),'mimir-backup.anat');
   }
-  const safeName=s=>s.toLowerCase().replace(/[^a-zа-яё0-9]+/gi,'-').replace(/^-|-$/g,'')||'anatomia';
+  const safeName=s=>s.toLowerCase().replace(/[^a-zа-яё0-9]+/gi,'-').replace(/^-|-$/g,'')||'mimir';
   const blobToDataURL=blob=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(blob)});
   const dataURLToBlob=url=>fetch(url).then(r=>r.blob());
   async function importFile(file){
