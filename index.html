@@ -27,9 +27,13 @@
     .app{max-width:1040px;margin:auto;padding:22px 20px 100px}
     header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:26px}
     .brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:22px;letter-spacing:-.6px}
-    .brandmark{width:36px;height:36px;border-radius:12px;background:var(--accent);color:white;display:grid;place-items:center;font-weight:800}
+    .brandmark{width:36px;height:36px;display:grid;place-items:center;flex:none}
+    .brandmark img{width:34px;height:38px;object-fit:contain;display:block}
     .header-actions{display:flex;gap:8px}
-    .iconbtn,.btn{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:12px;padding:10px 14px}
+    .iconbtn,.btn{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:13px;padding:10px 14px;transition:background .16s ease,border-color .16s ease,transform .16s ease,box-shadow .16s ease}
+    .btn:hover,.iconbtn:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--line));box-shadow:0 3px 12px rgba(27,39,69,.07)}
+    .btn:active,.iconbtn:active{transform:translateY(1px)}
+    button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     .iconbtn{width:42px;height:42px;padding:0;font-size:18px}
     .btn.primary{background:var(--accent);color:white;border-color:var(--accent)}
     .btn.subtle{background:var(--accent2);color:var(--accent);border-color:transparent}
@@ -100,13 +104,50 @@
     .smallbtn{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:9px;padding:7px 9px}
     .notice{padding:12px 14px;border-radius:12px;background:var(--accent2);color:var(--text);font-size:13px;margin:12px 0}
     .hidden{display:none!important}
+
+    .practice-launch{margin:0 0 18px}
+    .mode-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:18px}
+    .mode-btn{min-height:54px;text-align:left;font-weight:650;padding:13px 15px}
+    .mode-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+    .mode-help{margin:12px 0 0;font-size:12px}
+    .practice-config{padding-top:14px;border-top:1px solid var(--line)}
+    .practice-config select{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--text)}
+    .practice-panel{max-width:760px}
+    .practice-deck-list{display:flex;flex-direction:column;gap:8px}
+    .practice-deck-option{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);cursor:pointer}
+    .practice-deck-option input{width:18px;height:18px;accent-color:var(--accent);flex:none}
+    .practice-deck-option span{flex:1}
+    .practice-deck-option small{color:var(--muted)}
+    .practice-config{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:16px}
+    .practice-config .field{margin:0}
+    .practice-config select{padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--text)}
+    .game-wrap{max-width:820px;margin:0 auto}
+    .game-panel{padding:18px}
+    .match-columns{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .match-column{display:flex;flex-direction:column;gap:8px}
+    .match-column h3{font-size:14px;color:var(--muted);margin:0 0 3px}
+    .match-option,.choice-option{width:100%;padding:12px;border:1px solid var(--line);border-radius:11px;background:var(--bg);color:var(--text);text-align:left;overflow-wrap:anywhere}
+    .match-option.selected,.choice-option.selected{border-color:var(--accent);background:var(--accent2)}
+    .match-option.matched{border-color:var(--good);color:var(--good);opacity:.72}
+    .choice-option.correct{border-color:var(--good);background:color-mix(in srgb,var(--good) 12%,var(--surface))}
+    .choice-option.incorrect{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--surface))}
+    .game-feedback{text-align:center;font-weight:650;margin:14px 0 4px;min-height:24px}
+    .game-feedback.good{color:var(--good)}.game-feedback.bad{color:var(--bad)}
+    .game-question-image{height:min(42vh,360px);min-height:180px;background:var(--surface2);border-radius:12px;display:grid;place-items:center;overflow:hidden;margin-bottom:16px}
+    .game-question-image img{width:100%;height:100%;object-fit:contain}
+    .game-question-text{text-align:center;font-size:22px;font-weight:750;margin:10px 0 16px;overflow-wrap:anywhere}
+    .choice-list{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+    .game-result{text-align:center;padding:24px 10px}
+    .game-result strong{font-size:36px;display:block;margin:8px}
+    .game-result p{margin:5px 0}
+    @media(max-width:520px){.mode-grid{grid-template-columns:1fr}.match-columns{gap:8px}.match-option,.choice-option{padding:10px 8px;font-size:13px}.choice-list{grid-template-columns:1fr}.game-panel{padding:12px}}
     @media(max-width:600px){.app{padding:16px 14px 100px}header{margin-bottom:18px}.topline{align-items:flex-start;flex-direction:column}.topline .btn{width:100%}.form{padding:16px}.stats{gap:7px}.stat{padding:12px}.stat strong{font-size:21px}.study-card{padding:12px}.study-image{height:34vh;min-height:170px}}
   </style>
 </head>
 <body>
 <div class="app">
   <header>
-    <div class="brand"><div class="brandmark">M</div> Mimir</div>
+    <div class="brand"><div class="brandmark"><img src="./icons/icon.svg" alt=""></div> Mimir</div>
     <div class="header-actions">
       <button class="iconbtn" id="themeBtn" title="Сменить тему" aria-label="Сменить тему">☾</button>
       <button class="iconbtn" id="exportAllBtn" title="Экспорт всех наборов" aria-label="Экспорт">⇧</button>
@@ -116,6 +157,9 @@
   <main>
     <section class="view active" id="homeView">
       <div class="topline"><div><h1>Мои наборы</h1><p>Материалы для изучения анатомии</p></div><button class="btn primary" id="newDeckBtn">＋ Создать набор</button></div>
+      <div class="actions practice-launch">
+        <button class="btn primary" id="openPracticeBtn">Начать повторение</button>
+      </div>
       <div class="grid" id="deckGrid"></div>
     </section>
 
@@ -123,7 +167,6 @@
       <div class="topline"><div><h1 id="deckTitle">Набор</h1><p id="deckSubtitle"></p></div><button class="btn" id="backHomeBtn">← К наборам</button></div>
       <div class="actions" style="margin:0 0 16px">
         <button class="btn primary" id="addCardBtn">＋ Добавить карточку</button>
-        <button class="btn" id="studyDeckBtn">Начать изучение</button>
         <button class="btn" id="exportDeckBtn">Экспорт набора</button>
         <button class="btn" id="importDeckBtn">Импорт набора</button>
         <input type="file" id="importInput" accept=".anat,.json,application/json" hidden>
@@ -175,6 +218,41 @@
       </div>
     </section>
 
+    <section class="view" id="practiceView">
+      <div class="topline"><div><h1>Начать повторение</h1><p>Выбери наборы и режим занятий</p></div><button class="btn" id="practiceBackBtn">← К наборам</button></div>
+      <div class="panel form practice-panel">
+        <div class="field" style="margin-top:0"><label>Наборы для повторения</label><div class="practice-deck-list" id="practiceDeckList"></div></div>
+        <div class="field" style="margin-bottom:0"><label>Режим</label>
+          <div class="mode-grid">
+            <button class="btn mode-btn" id="modeReviewBtn">Повторение</button>
+            <button class="btn mode-btn" id="modeMatchBtn">Сопоставить пару</button>
+            <button class="btn mode-btn" id="modeNameBtn">Подобрать название</button>
+            <button class="btn mode-btn" id="modeTranslateBtn">Подобрать перевод</button>
+          </div>
+          <p class="mode-help" id="modeHelp">Выбери режим после выбора одного или нескольких наборов.</p>
+        </div>
+        <div class="practice-config hidden" id="practiceConfig">
+          <div class="field hidden" id="nameLanguageField"><label for="nameLanguageSelect">Язык вариантов</label>
+            <select id="nameLanguageSelect"><option value="ru">Русский</option><option value="la">Латинский</option></select>
+          </div>
+          <div class="field hidden" id="translateDirectionField"><label for="translateDirectionSelect">Направление перевода</label>
+            <select id="translateDirectionSelect"><option value="ru-la">Русский → латинский</option><option value="la-ru">Латинский → русский</option></select>
+          </div>
+          <div class="field" style="justify-content:end"><button class="btn primary" id="startConfiguredGameBtn">Начать игру</button></div>
+        </div>
+        <p class="muted-note">Игры не меняют обычную статистику изучения.</p>
+      </div>
+    </section>
+
+    <section class="view" id="gameView">
+      <div class="topline"><div><h1 id="gameHeading">Игра</h1><p id="gameSubtitle"></p></div><button class="btn" id="exitGameBtn">Завершить игру</button></div>
+      <div class="game-wrap">
+        <div class="study-meta"><span id="gamePosition"></span><span id="gameScore"></span></div>
+        <div class="progress" style="margin-bottom:14px"><span id="gameBar" style="width:0%"></span></div>
+        <div class="panel game-panel" id="gameContent"></div>
+      </div>
+    </section>
+
     <section class="view" id="statsView">
       <div class="topline"><div><h1>Статистика</h1><p>Твои результаты изучения</p></div></div>
       <div class="stats">
@@ -182,7 +260,7 @@
         <div class="panel stat"><strong id="statCards">0</strong><span>Карточек</span></div>
         <div class="panel stat"><strong id="statReviews">0</strong><span>Оценок</span></div>
       </div>
-      <div class="notice">Оценки «Знаю» и «Не знаю» записываются в историю изучения. При экспорте набора история не передаётся.</div>
+      <div class="notice">Оценки «Знаю» и «Не знаю» записываются в историю обычного изучения. Игровые результаты не меняют эту историю. При экспорте набора история не передаётся.</div>
     </section>
 
     <section class="view" id="settingsView">
@@ -197,8 +275,7 @@
 </div>
 
 <nav class="tabs"><div class="tabs-inner">
-  <button class="tab active" data-view="homeView"><span>⌂</span>Главная</button>
-  <button class="tab" data-view="homeView"><span>▤</span>Наборы</button>
+  <button class="tab active" data-view="homeView"><span>▤</span>Наборы</button>
   <button class="tab" data-view="statsView"><span>▥</span>Статистика</button>
   <button class="tab" data-view="settingsView"><span>⚙</span>Настройки</button>
 </div></nav>
@@ -206,7 +283,8 @@
 (() => {
   const DB_NAME='anatomia-db', DB_VERSION=1;
   let db, decks=[], currentDeckId=null, editingDeckId=null, editingCardId=null;
-  let studyCards=[], studyIndex=0, currentImage=null, ratingCount=0, imageFit='contain', imageZoom=100, imagePanX=0, imagePanY=0, imageDrag=null;
+  let studyCards=[], studyIndex=0, studyMode='deck', currentImage=null, ratingCount=0, imageFit='contain', imageZoom=100, imagePanX=0, imagePanY=0, imageDrag=null;
+  let selectedDeckIds=new Set(), gameType='match', gameCards=[], gameIndex=0, gameCorrect=0, gameWrong=0, gameOptions=[], gameAnswered=false, gameMatched=new Set(), matchLeftOrder=[], matchRightOrder=[], matchSelectedRU=null, matchSelectedLA=null, gameMessage='', gameAnswerField='la', gameSourceField='ru';
   const $=id=>document.getElementById(id);
   const uid=()=>crypto.randomUUID ? crypto.randomUUID() : 'id-'+Date.now()+'-'+Math.random().toString(16).slice(2);
   const openDB=()=>new Promise((resolve,reject)=>{
@@ -292,6 +370,205 @@
     }
     showView('deckView');
   }
+
+  const shuffle=items=>{
+    const a=[...items];
+    for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+    return a;
+  };
+  const cardDeckId=c=>c.deckId??c.deck_id??c.setId??'';
+  async function openPractice(){
+    selectedDeckIds=new Set();
+    await renderPracticeDecks();
+    resetPracticeMode();
+    showView('practiceView');
+  }
+  async function renderPracticeDecks(){
+    const box=$('practiceDeckList');
+    if(!decks.length){box.innerHTML='<p>Сначала создай хотя бы один набор.</p>';return;}
+    const counts=new Map();
+    const allCards=await all('cards');
+    for(const c of allCards){const id=String(cardDeckId(c));counts.set(id,(counts.get(id)||0)+1);}
+    box.innerHTML=decks.map(d=>`<label class="practice-deck-option"><input type="checkbox" data-deck-id="${escapeHTML(d.id)}" ${selectedDeckIds.has(String(d.id))?'checked':''}><span>${escapeHTML(d.name)}</span><small>${counts.get(String(d.id))||0} карточек</small></label>`).join('');
+    box.querySelectorAll('input[type="checkbox"]').forEach(input=>input.onchange=()=>{
+      if(input.checked)selectedDeckIds.add(String(input.dataset.deckId));
+      else selectedDeckIds.delete(String(input.dataset.deckId));
+    });
+  }
+  async function getSelectedCards(){
+    if(!selectedDeckIds.size){alert('Выбери хотя бы один набор.');return null;}
+    const allCards=await all('cards');
+    return allCards.filter(c=>selectedDeckIds.has(String(cardDeckId(c))));
+  }
+  async function startMixedStudy(){
+    const cards=await getSelectedCards();
+    if(!cards)return;
+    if(!cards.length){alert('В выбранных наборах пока нет карточек.');return;}
+    studyMode='mixed';currentDeckId=null;studyCards=shuffle(cards);studyIndex=0;ratingCount=0;
+    $('studyDeckName').textContent=`Повторение · ${selectedDeckIds.size} набор(ов)`;
+    renderStudy();showView('studyView');
+  }
+  function finishStudy(){
+    if(studyMode==='mixed')showView('homeView');
+    else openDeck(currentDeckId);
+  }
+  let pendingGameType=null;
+  function resetPracticeMode(){
+    pendingGameType=null;
+    $('practiceConfig').classList.add('hidden');
+    $('nameLanguageField').classList.add('hidden');
+    $('translateDirectionField').classList.add('hidden');
+    $('modeHelp').textContent='Выбери режим после выбора одного или нескольких наборов.';
+    document.querySelectorAll('.mode-btn').forEach(button=>button.classList.remove('primary'));
+  }
+  async function choosePracticeMode(mode){
+    pendingGameType=mode;
+    document.querySelectorAll('.mode-btn').forEach(button=>button.classList.remove('primary'));
+    const buttonId={review:'modeReviewBtn',match:'modeMatchBtn',name:'modeNameBtn',translate:'modeTranslateBtn'}[mode];
+    $(buttonId).classList.add('primary');
+    if(mode==='review')return startMixedStudy();
+    if(mode==='match')return startGame('match');
+    $('practiceConfig').classList.remove('hidden');
+    $('nameLanguageField').classList.toggle('hidden',mode!=='name');
+    $('translateDirectionField').classList.toggle('hidden',mode!=='translate');
+    $('modeHelp').textContent=mode==='name'?'Выбери язык названий для вариантов ответа.':'Выбери направление перевода.';
+  }
+  const uniqueAnswers=(cards,field)=>new Set(cards.map(c=>String(c[field]??'').trim()).filter(Boolean)).size;
+  function makeChoiceOptions(card,field){
+    const answer=String(card[field]??'').trim();
+    const candidates=shuffle([...new Map(gameCards
+      .map(c=>String(c[field]??'').trim())
+      .filter(value=>value&&value!==answer)
+      .map(value=>[value,value])).values()]);
+    return shuffle([answer,...candidates.slice(0,3)]);
+  }
+  async function startGame(requestedMode){
+    const cards=await getSelectedCards();
+    if(!cards)return;
+    if(cards.length<2){alert('Для игры нужно хотя бы две карточки в выбранных наборах.');return;}
+    gameType=requestedMode||pendingGameType||'match';
+    if(gameType==='match'){
+      if(cards.some(c=>!String(c.ru??'').trim()||!String(c.la??'').trim())){
+        alert('В выбранных наборах есть карточки без обоих названий. Исправь их перед игрой.');
+        return;
+      }
+      gameCards=shuffle(cards);
+      matchLeftOrder=shuffle(gameCards);
+      matchRightOrder=shuffle(gameCards);
+    }else{
+      if(gameType==='name'){
+        gameAnswerField=$('nameLanguageSelect').value;
+        gameSourceField='image';
+      }else{
+        const direction=$('translateDirectionSelect').value;
+        gameSourceField=direction==='ru-la'?'ru':'la';
+        gameAnswerField=direction==='ru-la'?'la':'ru';
+      }
+      if(cards.some(c=>!String(c[gameAnswerField]??'').trim())){
+        alert('В выбранных наборах есть карточки без нужного названия. Исправь их перед игрой.');
+        return;
+      }
+      if(uniqueAnswers(cards,gameAnswerField)<2){
+        alert('В выбранных наборах недостаточно разных названий для вариантов ответа.');
+        return;
+      }
+      gameCards=shuffle(cards);
+    }
+    gameIndex=0;gameCorrect=0;gameWrong=0;gameMatched=new Set();
+    matchSelectedRU=null;matchSelectedLA=null;gameAnswered=false;gameMessage='';
+    $('gameHeading').textContent=gameType==='match'?'Сопоставить пару':gameType==='name'?'Подобрать название':'Подобрать перевод';
+    const selectedNames=decks.filter(d=>selectedDeckIds.has(String(d.id))).map(d=>d.name);
+    const gameDetails=gameType==='name'
+      ? ` · варианты на ${gameAnswerField==='ru'?'русском':'латинском'}`
+      : gameType==='translate'
+        ? ` · ${gameSourceField==='ru'?'русский → латинский':'латинский → русский'}`
+        : '';
+    $('gameSubtitle').textContent=`${selectedNames.join(', ')} · ${gameCards.length} карточек${gameDetails}`;
+    if(gameType==='match')renderMatchingGame();
+    else{prepareChoiceQuestion();renderChoiceGame();}
+    showView('gameView');
+  }
+  function renderMatchingGame(){
+    const remaining=gameCards.filter(c=>!gameMatched.has(c.id));
+    $('gamePosition').textContent=`Найдено пар: ${gameMatched.size} из ${gameCards.length}`;
+    $('gameScore').textContent=`Ошибок: ${gameWrong}`;
+    $('gameBar').style.width=(gameMatched.size/gameCards.length*100)+'%';
+    const left=matchLeftOrder.filter(c=>!gameMatched.has(c.id));
+    const right=matchRightOrder.filter(c=>!gameMatched.has(c.id));
+    $('gameContent').innerHTML=`<div class="match-columns">
+      <div class="match-column"><h3>Русские названия</h3>${left.map(c=>`<button class="match-option ${matchSelectedRU===c.id?'selected':''} ${gameMatched.has(c.id)?'matched':''}" data-match-side="ru" data-card-id="${escapeHTML(c.id)}" ${gameMatched.has(c.id)?'disabled':''}>${escapeHTML(c.ru)}</button>`).join('')}</div>
+      <div class="match-column"><h3>Латинские названия</h3>${right.map(c=>`<button class="match-option ${matchSelectedLA===c.id?'selected':''} ${gameMatched.has(c.id)?'matched':''}" data-match-side="la" data-card-id="${escapeHTML(c.id)}" ${gameMatched.has(c.id)?'disabled':''}>${escapeHTML(c.la)}</button>`).join('')}</div>
+    </div><div class="game-feedback ${gameMessage==='Верно!'?'good':gameMessage?'bad':''}">${escapeHTML(gameMessage||'Выбери русское и соответствующее латинское название.')}</div>`;
+    $('gameContent').onclick=e=>{
+      const button=e.target.closest('[data-match-side]');
+      if(!button||button.disabled)return;
+      const side=button.dataset.matchSide,id=button.dataset.cardId;
+      if(side==='ru')matchSelectedRU=matchSelectedRU===id?null:id;
+      else matchSelectedLA=matchSelectedLA===id?null:id;
+      if(matchSelectedRU&&matchSelectedLA){
+        if(matchSelectedRU===matchSelectedLA){
+          gameMatched.add(id);gameCorrect++;gameMessage='Верно!';
+          matchSelectedRU=null;matchSelectedLA=null;
+          if(gameMatched.size===gameCards.length){renderMatchingGame();window.setTimeout(finishGame,450);return;}
+        }else{
+          gameWrong++;gameMessage='Пара не совпала. Попробуй ещё раз.';
+          matchSelectedRU=null;matchSelectedLA=null;
+        }
+      }else gameMessage='';
+      renderMatchingGame();
+    };
+  }
+  function prepareChoiceQuestion(){
+    const card=gameCards[gameIndex];
+    gameOptions=makeChoiceOptions(card,gameAnswerField);
+    gameAnswered=false;
+  }
+  function renderChoiceGame(){
+    const card=gameCards[gameIndex];
+    const isName=gameType==='name';
+    $('gamePosition').textContent=`Вопрос ${gameIndex+1} из ${gameCards.length}`;
+    $('gameScore').textContent=`Верно: ${gameCorrect} · Ошибок: ${gameWrong}`;
+    $('gameBar').style.width=(gameIndex/gameCards.length*100)+'%';
+    const prompt=isName?'Как называется эта структура?':'Выбери правильный перевод';
+    const source=isName?'':String(card[gameSourceField]??'');
+    const image=isName&&card.image?`<div class="game-question-image"><img src="${imageURL(card.image)}" alt=""></div>`:'';
+    $('gameContent').innerHTML=`${image}<div class="game-question-text">${escapeHTML(isName?prompt:source)}</div>
+      <div class="choice-list">${gameOptions.map((option,i)=>`<button class="choice-option" data-choice-index="${i}">${escapeHTML(option)}</button>`).join('')}</div>
+      <div class="game-feedback" id="choiceFeedback"></div>
+      <div class="actions"><button class="btn primary" id="choiceNextBtn" disabled>${gameIndex===gameCards.length-1?'Завершить':'Следующий вопрос'}</button></div>`;
+    $('gameContent').querySelectorAll('[data-choice-index]').forEach(button=>button.onclick=()=>{
+      if(gameAnswered)return;
+      gameAnswered=true;
+      const selected=gameOptions[Number(button.dataset.choiceIndex)];
+      const answer=String(card[gameAnswerField]??'').trim();
+      const correct=selected===answer;
+      if(correct)gameCorrect++;else gameWrong++;
+      $('gameScore').textContent=`Верно: ${gameCorrect} · Ошибок: ${gameWrong}`;
+      $('gameContent').querySelectorAll('[data-choice-index]').forEach(option=>{
+        option.disabled=true;
+        const value=gameOptions[Number(option.dataset.choiceIndex)];
+        if(value===answer)option.classList.add('correct');
+        else if(option===button&&!correct)option.classList.add('incorrect');
+      });
+      const feedback=$('choiceFeedback');
+      feedback.textContent=correct?'Правильно!':`Неверно. Правильный ответ: ${answer}`;
+      feedback.className='game-feedback '+(correct?'good':'bad');
+      $('choiceNextBtn').disabled=false;
+    });
+    $('choiceNextBtn').onclick=()=>{
+      if(!gameAnswered)return;
+      if(gameIndex===gameCards.length-1){finishGame();return;}
+      gameIndex++;prepareChoiceQuestion();renderChoiceGame();
+    };
+  }
+  function finishGame(){
+    $('gamePosition').textContent='Игра завершена';
+    $('gameScore').textContent=`Верно: ${gameCorrect} · Ошибок: ${gameWrong}`;
+    $('gameBar').style.width='100%';
+    const resultLabel=gameType==='match'?'Найдено пар':'Правильных ответов';
+    $('gameContent').innerHTML=`<div class="game-result"><h2>Результат</h2><strong>${gameCorrect} / ${gameCards.length}</strong><p>${resultLabel}</p><p>Ошибок: ${gameWrong}</p><div class="actions" style="justify-content:center"><button class="btn primary" id="gameBackToSetupBtn">К выбору наборов</button></div></div>`;
+    $('gameBackToSetupBtn').onclick=()=>showView('practiceView');
+  }
   function newCard(){editingCardId=null;currentImage=null;$('cardFormHeading').textContent='Новая карточка';$('ruName').value='';$('laName').value='';renderUpload();showView('cardFormView')}
   async function editCard(id){const c=await get('cards',id);editingCardId=id;currentImage=c.image||null;$('cardFormHeading').textContent='Изменить карточку';$('ruName').value=c.ru;$('laName').value=c.la;renderUpload();showView('cardFormView')}
   function renderUpload(){const box=$('uploadBox');if(currentImage){const u=imageURL(currentImage);box.innerHTML=`<img src="${u}" alt="Изображение карточки"><label for="imageInput" style="position:absolute;bottom:7px;right:7px;background:var(--surface);padding:8px 11px;border-radius:9px">Заменить</label><input id="imageInput" type="file" accept="image/png,image/jpeg,image/webp">`;}else{box.innerHTML='<label for="imageInput"><div style="font-size:30px">＋</div><strong>Выбрать изображение</strong><br><small>JPG, PNG или WebP</small></label><input id="imageInput" type="file" accept="image/png,image/jpeg,image/webp">';} $('imageInput').onchange=e=>{const f=e.target.files[0];if(f){if(!f.type.startsWith('image/'))return alert('Выбери файл изображения.');currentImage=f;renderUpload();}}}
@@ -301,10 +578,6 @@
     if(!currentImage)return alert('Добавь изображение карточки.');
     const c={id:editingCardId||uid(),deckId:currentDeckId,ru,la,image:currentImage,updatedAt:Date.now()};
     await put('cards',c);openDeck(currentDeckId);
-  }
-  async function startStudy(){
-    studyCards=await cardsFor(currentDeckId);if(!studyCards.length)return alert('В этом наборе пока нет карточек.');
-    studyCards.sort(()=>Math.random()-.5);studyIndex=0;ratingCount=0;$('studyDeckName').textContent=(await get('decks',currentDeckId)).name;renderStudy();showView('studyView');
   }
   function renderStudy(){
     const c=studyCards[studyIndex];imageFit='contain';imageZoom=100;imagePanX=0;imagePanY=0;updateStudyImageControls();$('studyPosition').textContent=`Карточка ${studyIndex+1} из ${studyCards.length}`;$('studyProgress').textContent='Изучение';$('studyBar').style.width=((studyIndex+1)/studyCards.length*100)+'%';
@@ -357,8 +630,8 @@
   };
   studyViewer.addEventListener('pointerup',endImageDrag);
   studyViewer.addEventListener('pointercancel',endImageDrag);
-  $('nextBtn').onclick=()=>{if(studyIndex<studyCards.length-1){studyIndex++;renderStudy()}else{showView('deckView');openDeck(currentDeckId)}};
-  async function rate(rating){const c=studyCards[studyIndex];await put('reviews',{id:uid(),cardId:c.id,deckId:currentDeckId,rating,createdAt:Date.now()});ratingCount++;$('ratingNote').textContent=rating==='know'?'Ответ отмечен как известный.':'Ответ отмечен для повторения.';updateStats();}
+  $('nextBtn').onclick=()=>{if(studyIndex<studyCards.length-1){studyIndex++;renderStudy()}else{finishStudy()}};
+  async function rate(rating){const c=studyCards[studyIndex];await put('reviews',{id:uid(),cardId:c.id,deckId:cardDeckId(c),rating,createdAt:Date.now()});ratingCount++;$('ratingNote').textContent=rating==='know'?'Ответ отмечен как известный.':'Ответ отмечен для повторения.';updateStats();}
   $('knowBtn').onclick=()=>rate('know');$('dontKnowBtn').onclick=()=>rate('dont');
   function downloadBlob(blob,name){const a=document.createElement('a'),u=URL.createObjectURL(blob);a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1500)}
   async function exportDeck(id){
@@ -386,14 +659,14 @@
       await refresh();openDeck(deck.id);alert('Набор импортирован.');
     }catch(e){alert('Не удалось импортировать файл: '+e.message)}
   }
-  $('newDeckBtn').onclick=newDeck;$('backHomeBtn').onclick=()=>showView('homeView');$('addCardBtn').onclick=newCard;$('studyDeckBtn').onclick=startStudy;
+  $('newDeckBtn').onclick=newDeck;$('openPracticeBtn').onclick=openPractice;$('practiceBackBtn').onclick=()=>showView('homeView');$('modeReviewBtn').onclick=()=>choosePracticeMode('review');$('modeMatchBtn').onclick=()=>choosePracticeMode('match');$('modeNameBtn').onclick=()=>choosePracticeMode('name');$('modeTranslateBtn').onclick=()=>choosePracticeMode('translate');$('startConfiguredGameBtn').onclick=()=>startGame(pendingGameType);$('exitGameBtn').onclick=()=>showView('practiceView');$('backHomeBtn').onclick=()=>showView('homeView');$('addCardBtn').onclick=newCard;
   $('exportDeckBtn').onclick=()=>exportDeck(currentDeckId);$('importDeckBtn').onclick=()=>$('importInput').click();$('importInput').onchange=e=>{if(e.target.files[0])importFile(e.target.files[0]);e.target.value=''};
   $('saveDeckBtn').onclick=async()=>{const name=$('deckName').value.trim();if(!name)return alert('Введи название набора.');const d={id:editingDeckId||uid(),name,description:$('deckDescription').value.trim(),createdAt:Date.now()};await put('decks',d);await refresh();if(editingDeckId)openDeck(d.id);else openDeck(d.id)};
   $('cancelDeckBtn').onclick=()=>editingDeckId?openDeck(editingDeckId):showView('homeView');
-  $('saveCardBtn').onclick=saveCard;$('cancelCardBtn').onclick=()=>openDeck(currentDeckId);$('exitStudyBtn').onclick=()=>openDeck(currentDeckId);
+  $('saveCardBtn').onclick=saveCard;$('cancelCardBtn').onclick=()=>openDeck(currentDeckId);$('exitStudyBtn').onclick=finishStudy;
   $('exportAllBtn').onclick=exportAll;$('backupBtn').onclick=exportAll;
   $('clearDataBtn').onclick=async()=>{if(confirm('Удалить все наборы, карточки и историю изучения? Это действие нельзя отменить.')){for(const s of ['decks','cards','reviews'])for(const x of await all(s))await del(s,x.id);await refresh();showView('homeView')}};
-  document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{if(t.dataset.view==='homeView')showView('homeView');else showView(t.dataset.view);if(t.dataset.view==='statsView')updateStats()});
+  document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{showView(t.dataset.view);if(t.dataset.view==='statsView')updateStats()});
   const applyTheme=t=>{const v=t==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):t;document.documentElement.dataset.theme=v;$('themeBtn').textContent=v==='dark'?'☀':'☾';$('themeSelect').value=t;};
   let themeSetting=localStorage.getItem('anatomia-theme')||'system';applyTheme(themeSetting);
   $('themeBtn').onclick=()=>{themeSetting=document.documentElement.dataset.theme==='dark'?'light':'dark';localStorage.setItem('anatomia-theme',themeSetting);applyTheme(themeSetting)};
